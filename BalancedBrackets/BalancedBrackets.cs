@@ -18,7 +18,7 @@ namespace BalancedBracketsNS
          *  "[LaunchCode]", "Launch[Code]", "[]LaunchCode", "", "[]"
          *
          * While these do not:
-         *   "[LaunchCode", "Launch]Code[", "[", "]["
+         *   "[LaunchCode", "Launch]Code[", "[", "][" "[][]"
          *
          * parameter str - to be validated
          * returns true if balanced, false otherwise
@@ -26,6 +26,7 @@ namespace BalancedBracketsNS
         public static bool HasBalancedBrackets(String str)
         {
             int brackets = 0;
+            int parentheses = 0;
             foreach (char ch in str.ToCharArray())
             {
                 if (ch == '[')
@@ -35,9 +36,25 @@ namespace BalancedBracketsNS
                 else if (ch == ']')
                 {
                     brackets--;
+                    if (brackets < 0)
+                    {
+                        break;
+                    }
+                }
+                else if (ch == '(')
+                {
+                    parentheses++;
+                }
+                else if (ch == ')')
+                {
+                    parentheses--;
+                    if (parentheses < 0)
+                    {
+                        break;
+                    }
                 }
             }
-            return brackets == 0;
+            return brackets == 0 && parentheses == 0;
         }
     }
 }
